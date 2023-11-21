@@ -74,7 +74,7 @@ public class RNGattServer {
 
     private static void prepareAndStartAdvertising(Context context) {
 
-        RNGattServer.ensureBluetoothCanBeUsed(new IRNGattServerEnsureCallback() {
+        RNGattServer.ensureBluetoothCanBeUsed(context, new IRNGattServerEnsureCallback() {
             @Override
             public void callback(boolean isSuccess, String text) {
                 if (isSuccess) {
@@ -319,9 +319,9 @@ public class RNGattServer {
         InsistUntilSuccess
     }
 
-    private static void ensureBluetoothCanBeUsed(IRNGattServerEnsureCallback completion) {
+    private static void ensureBluetoothCanBeUsed(Context context, IRNGattServerEnsureCallback completion) {
 
-        RNGattServer.enableBluetooth(AskType.AskOnce, new IRNGattServerEnableCallback() {
+        RNGattServer.enableBluetooth(context, AskType.AskOnce, new IRNGattServerEnableCallback() {
             @Override
             public void callback(boolean isEnabled) {
                 if (!isEnabled) {
@@ -385,8 +385,8 @@ public class RNGattServer {
 //        }
     }
 
-    private static void enableBluetooth(AskType askType, IRNGattServerEnableCallback completion) {
-        if (bluetoothAdapter.isEnabled()) {
+    private static void enableBluetooth(Context context, AskType askType, IRNGattServerEnableCallback completion) {
+        if (getBluetoothAdapter(context).isEnabled()) {
             completion.callback(true);
         } else {
             String intentString = BluetoothAdapter.ACTION_REQUEST_ENABLE;
