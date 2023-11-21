@@ -53,12 +53,14 @@ public class RNGattServer {
     private static boolean isAdvertising = false;
 
     public static void setIsAdvertising(Context context, boolean value) {
-        isAdvertising = value;
+        if (isAdvertising != value){
+            isAdvertising = value;
 
-        if (value) {
-            RNGattServer.prepareAndStartAdvertising(context);
-        } else {
-            RNGattServer.bleStopAdvertising(context);
+            if (value) {
+                RNGattServer.prepareAndStartAdvertising(context);
+            } else {
+                RNGattServer.bleStopAdvertising(context);
+            }
         }
     }
 
