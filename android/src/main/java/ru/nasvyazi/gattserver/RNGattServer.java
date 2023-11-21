@@ -184,7 +184,7 @@ public class RNGattServer {
         @Override
         public void onCharacteristicReadRequest(BluetoothDevice device, int requestId, int offset, BluetoothGattCharacteristic characteristic) {
             String log = "onCharacteristicRead offset="+offset;
-            if (characteristic.getUuid() == UUID.fromString(CHAR_FOR_READ_UUID)) {
+            if (characteristic.getUuid().equals(UUID.fromString(CHAR_FOR_READ_UUID))) {
                 String strValue = "4F0001001310BC01";
                 RNGattServer.gattServer.sendResponse(device, requestId, BluetoothGatt.GATT_SUCCESS, 0, strValue.getBytes(Charsets.UTF_8));
                 Log.d("TEST", log+"\nresponse=success, value=\"$strValue\"");
@@ -198,7 +198,7 @@ public class RNGattServer {
         @Override
         public void onCharacteristicWriteRequest(BluetoothDevice device, int requestId, BluetoothGattCharacteristic characteristic, boolean preparedWrite, boolean responseNeeded, int offset, byte[] value) {
             String log = "onCharacteristicWrite offset="+String.valueOf(offset)+" responseNeeded="+String.valueOf(responseNeeded)+" preparedWrite="+String.valueOf(preparedWrite);
-            if (characteristic.getUuid() == UUID.fromString(CHAR_FOR_WRITE_UUID)) {
+            if (characteristic.getUuid().equals(UUID.fromString(CHAR_FOR_WRITE_UUID))) {
                 String strValue = value == null || value.length == 0 ?  "" : new String(value, Charsets.UTF_8);
                 if (responseNeeded) {
                     RNGattServer.gattServer.sendResponse(device, requestId, BluetoothGatt.GATT_SUCCESS, 0, strValue.getBytes(Charsets.UTF_8));
@@ -220,9 +220,9 @@ public class RNGattServer {
         @Override
         public void onDescriptorWriteRequest(BluetoothDevice device, int requestId, BluetoothGattDescriptor descriptor, boolean preparedWrite, boolean responseNeeded, int offset, byte[] value) {
             String strLog = "onDescriptorWriteRequest";
-            if (descriptor.getUuid() == UUID.fromString(CCC_DESCRIPTOR_UUID)) {
+            if (descriptor.getUuid().equals(UUID.fromString(CCC_DESCRIPTOR_UUID))) {
                 int status = BluetoothGatt.GATT_REQUEST_NOT_SUPPORTED;
-                if (descriptor.getCharacteristic().getUuid() == UUID.fromString(CHAR_FOR_INDICATE_UUID)) {
+                if (descriptor.getCharacteristic().getUuid().equals(UUID.fromString(CHAR_FOR_INDICATE_UUID))) {
                     if (Arrays.equals(value, BluetoothGattDescriptor.ENABLE_INDICATION_VALUE)) {
                         subscribedDevices.add(device);
                         status = BluetoothGatt.GATT_SUCCESS;
@@ -249,7 +249,7 @@ public class RNGattServer {
         @Override
         public void onDescriptorReadRequest(BluetoothDevice device, int requestId, int offset, BluetoothGattDescriptor descriptor) {
             String log = "onDescriptorReadRequest";
-            if (descriptor.getUuid() == UUID.fromString(CCC_DESCRIPTOR_UUID)) {
+            if (descriptor.getUuid().equals(UUID.fromString(CCC_DESCRIPTOR_UUID))) {
                 byte[] returnValue = null;
                 if (subscribedDevices.contains(device)) {
                     log += " CCCD response=ENABLE_NOTIFICATION";
