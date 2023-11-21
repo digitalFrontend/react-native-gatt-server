@@ -14,7 +14,7 @@ import com.facebook.react.bridge.JavaScriptModule;
 public class RNGattServerPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-        return Arrays.<NativeModule>asList(new RNChangeBundleModule(reactContext));
+        return Arrays.<NativeModule>asList(new RNGattServerModule(reactContext));
     }
 
     @Override

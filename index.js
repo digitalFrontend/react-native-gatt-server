@@ -2,4 +2,9 @@ import { NativeModules } from 'react-native'
 
 const { RNGattServer } = NativeModules
 
-export default RNGattServer
+
+const GattServer = {
+    setIsAdvertising: state => RNGattServer.setIsAdvertising(state)
+}
+
+export default GattServer
