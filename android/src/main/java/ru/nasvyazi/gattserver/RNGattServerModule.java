@@ -35,6 +35,7 @@ public class RNGattServerModule extends ReactContextBaseJavaModule {
     public RNGattServerModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
+        RNGattServer.setContext(this.reactContext);
     }
 
     @Override
